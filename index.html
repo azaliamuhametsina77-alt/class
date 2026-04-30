@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Класс Асмы — версия 13</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="asma-classroom-v6">
+  <style>
+    #asma-classroom-v6,
+    #asma-classroom-v6 * {
+      box-sizing: border-box;
+    }
+
+    #asma-classroom-v6 {
+      width: 100%;
+      background: #FBFBFB;
+      font-family: 'Montserrat', Arial, sans-serif;
+      padding: 42px 16px 54px;
+      color: #1f1f1f;
+      overflow: visible;
+    }
+
+    #asma-classroom-v6 .scene {
+      width: min(980px, 100%);
+      margin: 0 auto;
+      position: relative;
+      min-height: 720px;
+      overflow: visible;
+    }
+
+    #asma-classroom-v6 .board-wrap {
+      position: relative;
+      width: min(760px, 92%);
+      margin: 0 auto 62px;
+      padding-top: 8px;
+    }
+
+    #asma-classroom-v6 .board {
+      min-height: 168px;
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0)),
+        #202522;
+      border: 6px solid #d8c2a4;
+      box-shadow: 0 16px 34px rgba(0,0,0,0.11);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 36px;
+      position: relative;
+    }
+
+    #asma-classroom-v6 .board:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -13px;
+      width: 88%;
+      height: 10px;
+      transform: translateX(-50%);
+      background: #c9aa82;
+      border-radius: 999px;
+      opacity: .9;
+    }
+
+    #asma-classroom-v6 .board-quote {
+      color: rgba(255,255,255,0.92);
+      font-size: clamp(18px, 2.1vw, 24px);
+      line-height: 1.48;
+      text-align: center;
+      font-weight: 500;
+      max-width: 650px;
+    }
+
+    #asma-classroom-v6 .board-quote span {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    #asma-classroom-v6 .teacher-zone {
+      position: absolute;
+      left: 50%;
+      top: 248px;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    #asma-classroom-v6 .teacher-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #444;
+      background: rgba(251,251,251,.86);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    #asma-classroom-v6 .person {
+      width: 42px;
+      height: 70px;
+      position: relative;
+      margin: 0 auto;
+      flex: 0 0 auto;
+    }
+
+    #asma-classroom-v6 .person:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 25px;
+      height: 25px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: var(--person-color, #767676);
+    }
+
+    #asma-classroom-v6 .person:after {
+      content: "";
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      width: 36px;
+      height: 39px;
+      transform: translateX(-50%);
+      border-radius: 17px 17px 11px 11px;
+      background: var(--person-color, #767676);
+    }
+
+    #asma-classroom-v6 .teacher .person {
+      --person-color: #D71C1C;
+      width: 48px;
+      height: 80px;
+    }
+
+    #asma-classroom-v6 .teacher .person:before {
+      width: 29px;
+      height: 29px;
+    }
+
+    #asma-classroom-v6 .teacher .person:after {
+      top: 35px;
+      width: 42px;
+      height: 44px;
+      border-radius: 19px 19px 12px 12px;
+    }
+
+    #asma-classroom-v6 .desks {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(96px, 1fr));
+      gap: 46px 28px;
+      width: min(860px, 100%);
+      margin: 124px auto 0;
+      overflow: visible;
+    }
+
+    #asma-classroom-v6 .desk-unit {
+      position: relative;
+      min-height: 128px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: visible;
+    }
+
+    #asma-classroom-v6 .student-hit {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 78px;
+      height: 78px;
+      z-index: 8;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: visible;
+    }
+
+    #asma-classroom-v6 .student-hit .person {
+      --person-color: #777;
+      transition: transform .18s ease, filter .18s ease;
+    }
+
+    #asma-classroom-v6 .student-hit:hover .person,
+    #asma-classroom-v6 .student-hit:focus-visible .person {
+      transform: translateY(-3px) scale(1.04);
+      filter: brightness(.9);
+    }
+
+    #asma-classroom-v6 .desk {
+      width: 118px;
+      height: 46px;
+      border-radius: 14px;
+      background: #efe5d8;
+      border: 1px solid #dccbb8;
+      position: relative;
+      z-index: 6;
+      box-shadow: 0 8px 14px rgba(0,0,0,0.055);
+    }
+
+    #asma-classroom-v6 .legs {
+      position: absolute;
+      left: 50%;
+      bottom: -34px;
+      width: 118px;
+      height: 58px;
+      transform: translateX(-50%);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    #asma-classroom-v6 .legs:before,
+    #asma-classroom-v6 .legs:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 10px;
+      height: 58px;
+      background: #c8b49e;
+      border-radius: 0 0 8px 8px;
+    }
+
+    #asma-classroom-v6 .legs:before { left: 21px; }
+    #asma-classroom-v6 .legs:after { right: 21px; }
+
+    #asma-classroom-v6 .bubble {
+      position: absolute;
+      left: 50%;
+      bottom: 88px;
+      transform: translateX(-50%) translateY(8px);
+      width: 190px;
+      min-height: 58px;
+      padding: 11px 14px;
+      border-radius: 16px;
+      background: #fff;
+      color: #242424;
+      font-size: 13px;
+      line-height: 1.36;
+      text-align: center;
+      font-weight: 500;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.13);
+      border: 1px solid rgba(0,0,0,.04);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+      z-index: 50;
+    }
+
+    #asma-classroom-v6 .bubble:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -9px;
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      transform: translateX(-50%) rotate(45deg);
+      border-right: 1px solid rgba(0,0,0,.04);
+      border-bottom: 1px solid rgba(0,0,0,.04);
+    }
+
+    #asma-classroom-v6 .student-hit:hover .bubble,
+    #asma-classroom-v6 .student-hit:focus-visible .bubble {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    
+    #asma-classroom-v6 .desk-unit:nth-child(-n+5) .student-hit {
+      top: 16px;
+    }
+
+    #asma-classroom-v6 .desk-unit:nth-child(-n+5) {
+      min-height: 144px;
+    }
+
+    #asma-classroom-v6 .student-hit.bubble-down .bubble {
+      bottom: auto;
+      top: 82px;
+      transform: translateX(-50%) translateY(-8px);
+    }
+
+    #asma-classroom-v6 .student-hit.bubble-down .bubble:after {
+      bottom: auto;
+      top: -9px;
+      border-right: 0;
+      border-bottom: 0;
+      border-left: 1px solid rgba(0,0,0,.04);
+      border-top: 1px solid rgba(0,0,0,.04);
+    }
+
+    #asma-classroom-v6 .student-hit.bubble-down:hover .bubble,
+    #asma-classroom-v6 .student-hit.bubble-down:focus-visible .bubble {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    #asma-classroom-v6 .student-hit:focus-visible {
+      outline: none;
+    }
+
+    #asma-classroom-v6 .student-hit:focus-visible .person:after,
+    #asma-classroom-v6 .student-hit:focus-visible .person:before {
+      box-shadow: 0 0 0 3px rgba(215,28,28,.18);
+    }
+
+    @media (max-width: 760px) {
+      #asma-classroom-v6 {
+        padding: 28px 10px 42px;
+      }
+
+      #asma-classroom-v6 .scene {
+        min-height: 880px;
+      }
+
+      #asma-classroom-v6 .board-wrap {
+        margin-bottom: 40px;
+      }
+
+      #asma-classroom-v6 .board {
+        min-height: 190px;
+        padding: 24px 18px;
+      }
+
+      #asma-classroom-v6 .teacher-zone {
+        top: 276px;
+      }
+
+      #asma-classroom-v6 .desks {
+        grid-template-columns: repeat(4, minmax(72px, 1fr));
+        gap: 48px 12px;
+        margin-top: 132px;
+      }
+
+      #asma-classroom-v6 .desk {
+        width: 86px;
+        height: 40px;
+      }
+
+      #asma-classroom-v6 .legs {
+        width: 86px;
+        bottom: -30px;
+        height: 48px;
+      }
+
+      #asma-classroom-v6 .legs:before,
+      #asma-classroom-v6 .legs:after {
+        height: 48px;
+      }
+
+      #asma-classroom-v6 .legs:before { left: 15px; }
+      #asma-classroom-v6 .legs:after { right: 15px; }
+
+      #asma-classroom-v6 .bubble {
+        width: 156px;
+        font-size: 12px;
+        bottom: 82px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #asma-classroom-v6 .desks {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+        width: min(330px, 100%);
+        gap: 48px 14px;
+      }
+
+      #asma-classroom-v6 .scene {
+        min-height: 1450px;
+      }
+
+      #asma-classroom-v6 .bubble {
+        width: 170px;
+      }
+    }
+  </style>
+
+  <div class="scene" aria-label="Интерактивная сцена класса: при наведении на учеников появляются фразы о клане, на доске — ответ Асмы">
+    <div class="board-wrap">
+      <div class="board">
+        <div class="board-quote">
+          «Пока мы практикуем племенную дискриминацию, прогресс невозможен. Главное — ценить человека по его поступкам и характеру, а не по названию клана».
+        </div>
+      </div>
+    </div>
+
+    <div class="teacher-zone teacher" aria-hidden="true">
+      <div class="person"></div>
+    </div>
+
+    <div class="desks" id="asmaDesksV5"></div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('asma-classroom-v6');
+      if (!root) return;
+      const desks = root.querySelector('#asmaDesksV5');
+      const phrases = [
+        '«Доверяй прежде всего своим».',
+        '«Своих нужно поддерживать всегда».',
+        '«Наш клан сильнее других».',
+        '«Чужим нельзя верить до конца».',
+        '«Брак лучше заключать внутри клана».',
+        '«На выборах голосуй за своих».',
+        '«Клан — это честь семьи».',
+        '«Не забывай, кому ты принадлежишь».',
+        '«Свои люди помогут, когда государство не поможет».',
+        '«Человек без клана уязвим».',
+        '«Не спорь с теми, кто защищает наш клан».',
+        '«Сначала семья и клан, потом всё остальное».',
+        '«Наши должны держаться вместе».',
+        '«Они всегда будут за своих, значит и мы должны».',
+        '«Репутация клана важнее личного выбора».',
+        '«С чужими надо быть осторожнее».',
+        '«Своих нельзя критиковать публично».',
+        '«Твой успех — это честь твоего клана».',
+        '«Помни, кто свои, а кто чужие».',
+        '«Верность клану — долг». '
+      ];
+
+      phrases.forEach((phrase, index) => {
+        const unit = document.createElement('div');
+        unit.className = 'desk-unit';
+
+        const hit = document.createElement('div');
+        hit.className = 'student-hit';
+        if (index === 2) hit.classList.add('bubble-down');
+        hit.setAttribute('tabindex', '0');
+        hit.setAttribute('aria-label', 'Реплика ученика: ' + phrase.replace(/[«»]/g, ''));
+
+        const person = document.createElement('div');
+        person.className = 'person';
+
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.textContent = phrase;
+
+        const legs = document.createElement('div');
+        legs.className = 'legs';
+
+        const desk = document.createElement('div');
+        desk.className = 'desk';
+
+        hit.appendChild(person);
+        hit.appendChild(bubble);
+        unit.appendChild(hit);
+        unit.appendChild(legs);
+        unit.appendChild(desk);
+        desks.appendChild(unit);
+      });
+    })();
+  </script>
+</div>
+</body>
+</html>
